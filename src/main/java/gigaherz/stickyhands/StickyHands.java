@@ -1,13 +1,12 @@
 package gigaherz.stickyhands;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -28,36 +27,37 @@ public class StickyHands
         private static Hand lastHand;
 
         @SubscribeEvent
-        public static void mouseEvent(TickEvent.ClientTickEvent event)
+        public static void tickEvent(TickEvent.ClientTickEvent event)
         {
-            if (lastHand != null && ! Minecraft.getInstance().gameSettings.keyBindUseItem.isKeyDown())
+            if (lastHand != null && !Minecraft.getInstance().gameSettings.keyBindUseItem.isKeyDown())
             {
                 lastHand = null;
             }
         }
 
+        // Needed because food returns PASS from onItemUse ¬_¬
         @SubscribeEvent
-        public static void playerInteract(PlayerInteractEvent.RightClickBlock event)
+        public static void useStart(LivingEntityUseItemEvent.Start event)
         {
-            testAndCancel(event);
-        }
+            if (!event.getEntityLiving().world.isRemote)
+                return;
 
-        @SubscribeEvent
-        public static void playerInteract(PlayerInteractEvent.RightClickItem event)
-        {
-            testAndCancel(event);
-        }
-
-        private static void testAndCancel(PlayerInteractEvent event)
-        {
-            if (lastHand != null && lastHand != event.getHand())
+            if (event.getEntityLiving() instanceof PlayerEntity)
             {
-                event.setCanceled(true);
-                event.setCancellationResult(ActionResultType.PASS);
+                PlayerEntity player = (PlayerEntity)event.getEntityLiving();
+
+                Hand hand = player.getActiveHand();
+                if (hand != null) // Yes it's null sometimes... but only sometimes...
+                    lastHand = hand;
             }
         }
 
-        public static void afterRightClickBlock(ClientPlayerEntity player, ClientWorld world, Hand hand, BlockRayTraceResult blockraytraceresult, ActionResultType actionresulttype)
+        public static boolean beforeRightClickBlock(Hand hand)
+        {
+            return lastHand == null || lastHand == hand;
+        }
+
+        public static void afterRightClickBlock(Hand hand, ActionResultType actionresulttype)
         {
             if (actionresulttype == ActionResultType.SUCCESS)
                 lastHand = hand;

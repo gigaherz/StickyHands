@@ -6,7 +6,7 @@ loaderVersion="[28,)" #mandatory (28 is current forge version)
 [[mods]] #mandatory
 modId="stickyhands" #mandatory
 version="${file.jarVersion}" #mandatory
-displayName="Sticky Fingers" #mandatory
+displayName="Sticky Hands" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 #displayURL="http://example.com/" #optional
 #logoFile="examplemod.png" #optional
