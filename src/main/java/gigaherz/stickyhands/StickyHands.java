@@ -9,7 +9,11 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.FMLNetworkConstants;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 
@@ -19,6 +23,8 @@ public class StickyHands
     public static final String MODID = "stickyhands";
 
     public StickyHands() {
+        //Make sure the mod being absent on the other network side does not cause the client to display the server as incompatible
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
     }
 
     @Mod.EventBusSubscriber(value= Dist.CLIENT, modid=MODID, bus=Mod.EventBusSubscriber.Bus.FORGE)

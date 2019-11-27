@@ -12,14 +12,14 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'maven-publish'
 
-version = '1.0'
+version = '1.0.1'
 group = 'gigaherz.stickyhands' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'StickyHands-1.14.4'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190719-1.14.3'
+    mappings channel: 'snapshot', version: '20191125-1.14.3'
 
     accessTransformer = file('dummy/accesstransformer.cfg')
 
@@ -62,7 +62,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.90'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.96'
 
 }
 
