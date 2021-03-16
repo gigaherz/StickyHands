@@ -1,17 +1,18 @@
 
 modLoader="javafml" #mandatory
-loaderVersion="[28,)" #mandatory (28 is current forge version)
+loaderVersion="[31,)" #mandatory (28 is current forge version)
 #issueTrackerURL="http://my.issue.tracker/" #optional
+#displayURL="http://example.com/" #optional
+#logoFile="examplemod.png" #optional
+#credits="Thanks for this example mod goes to Java" #optional
+authors="gigaherz" #optional
+license="BSD (3 clause)"
 
 [[mods]] #mandatory
 modId="stickyhands" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="Sticky Hands" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
-#displayURL="http://example.com/" #optional
-#logoFile="examplemod.png" #optional
-#credits="Thanks for this example mod goes to Java" #optional
-#authors="Love, Cheese and small house plants" #optional
 description='''
 A small client-only mod that prevents using the off-hand item automatically, if you run out of the main-hand item,
 or using the main-hand item if you pick up something while using the off-hand.
@@ -20,12 +21,12 @@ or using the main-hand item if you pick up something while using the off-hand.
 [[dependencies.stickyhands]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[28.1.0,)" #mandatory
+    versionRange="[31.2.45,)" #mandatory
     ordering="NONE"
     side="BOTH"
 [[dependencies.stickyhands]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.15.2,)"
     ordering="NONE"
     side="BOTH"

@@ -5,9 +5,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -41,7 +41,17 @@ public class StickyHands
             }
         }
 
-        // Needed because food returns PASS from onItemUse ¬_¬
+        @SubscribeEvent
+        public static void clickInputEvent(InputEvent.ClickInputEvent event)
+        {
+            if (lastHand != null && event.getHand() != lastHand)
+            {
+                event.setCanceled(true);
+                event.setSwingHand(false);
+            }
+        }
+
+        // Food returns PASS from onItemUse ¬_¬
         @SubscribeEvent
         public static void useStart(LivingEntityUseItemEvent.Start event)
         {
@@ -58,14 +68,21 @@ public class StickyHands
             }
         }
 
-        public static boolean beforeRightClickBlock(Hand hand)
+        public static void afterRightClickEntity(Hand hand, ActionResultType actionresulttype)
         {
-            return lastHand == null || lastHand == hand;
+            if (actionresulttype.isSuccessOrConsume())
+                lastHand = hand;
         }
 
         public static void afterRightClickBlock(Hand hand, ActionResultType actionresulttype)
         {
-            if (actionresulttype == ActionResultType.SUCCESS)
+            if (actionresulttype.isSuccessOrConsume())
+                lastHand = hand;
+        }
+
+        public static void afterRightClickItem(Hand hand, ActionResultType actionresulttype)
+        {
+            if (actionresulttype.isSuccessOrConsume())
                 lastHand = hand;
         }
     }
