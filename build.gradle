@@ -61,8 +61,8 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.1.0'
-    annotationProcessor 'org.spongepowered:mixin:0.8.1:processor'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.1.4'
+    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
 }
 
 jar {
@@ -79,6 +79,7 @@ jar {
         ])
     }
 }
+
 ////////////////
 // IntelliJ Project Import
 // The Mixin annotation process does not have an obfuscation source when running through the IntelliJ compiler,
