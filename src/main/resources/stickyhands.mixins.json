@@ -1,12 +1,12 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "gigaherz.stickyhands.mixin",
+  "package": "dev.gigaherz.stickyhands.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "stickyhands.refmap.json",
   "mixins": [],
   "client": [
-    "PlayerControllerMixin"
+    "MultiPlayerGameModeMixin"
   ],
   "server": [],
   "injectors": {

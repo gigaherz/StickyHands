@@ -1,6 +1,6 @@
 
 modLoader="javafml" #mandatory
-loaderVersion="[31,)" #mandatory (28 is current forge version)
+loaderVersion="[37,)" #mandatory (28 is current forge version)
 #issueTrackerURL="http://my.issue.tracker/" #optional
 #displayURL="http://example.com/" #optional
 #logoFile="examplemod.png" #optional
@@ -21,12 +21,12 @@ or using the main-hand item if you pick up something while using the off-hand.
 [[dependencies.stickyhands]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[31.2.45,)" #mandatory
+    versionRange="[37.0.59,)" #mandatory
     ordering="NONE"
     side="BOTH"
 [[dependencies.stickyhands]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2,)"
+    versionRange="[1.17.1,1.18)"
     ordering="NONE"
     side="BOTH"
