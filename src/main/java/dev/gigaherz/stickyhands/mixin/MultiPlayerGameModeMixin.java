@@ -33,16 +33,16 @@ public class MultiPlayerGameModeMixin
         StickyHands.Events.afterRightClickEntity(hand, info.getReturnValue());
     }
 
-    @Inject(method="useItemOn(Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;",
+    @Inject(method="useItemOn(Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;",
             at=@At("RETURN"))
-    public void interactWithBlockHook(LocalPlayer player, ClientLevel level, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> info)
+    public void interactWithBlockHook(LocalPlayer player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> info)
     {
         StickyHands.Events.afterRightClickBlock(hand, info.getReturnValue());
     }
 
-    @Inject(method="useItem(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+    @Inject(method="useItem(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
             at=@At("RETURN"))
-    public void interactWithItemHook(Player player, Level level, InteractionHand hand, CallbackInfoReturnable<InteractionResult> info)
+    public void interactWithItemHook(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> info)
     {
         StickyHands.Events.afterRightClickItem(hand, info.getReturnValue());
     }

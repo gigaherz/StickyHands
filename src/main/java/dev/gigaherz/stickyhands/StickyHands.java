@@ -40,7 +40,7 @@ public class StickyHands
         }
 
         @SubscribeEvent
-        public static void clickInputEvent(InputEvent.ClickInputEvent event)
+        public static void clickInputEvent(InputEvent.InteractionKeyMappingTriggered event)
         {
             if (lastHand != null && event.getHand() != lastHand)
             {
@@ -53,12 +53,12 @@ public class StickyHands
         @SubscribeEvent
         public static void useStart(LivingEntityUseItemEvent.Start event)
         {
-            if (!event.getEntityLiving().level.isClientSide)
+            if (!event.getEntity().level.isClientSide)
                 return;
 
-            if (event.getEntityLiving() instanceof Player)
+            if (event.getEntity() instanceof Player)
             {
-                Player player = (Player)event.getEntityLiving();
+                Player player = (Player)event.getEntity();
 
                 InteractionHand hand = player.getUsedItemHand();
                 if (hand != null) // Yes it's null sometimes... but only sometimes...
