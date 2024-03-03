@@ -4,14 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.IExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 
 import javax.annotation.Nullable;
 
@@ -21,8 +19,6 @@ public class StickyHands
     public static final String MODID = "stickyhands";
 
     public StickyHands() {
-        //Make sure the mod being absent on the other network side does not cause the client to display the server as incompatible
-        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> "", (a, b) -> true));
     }
 
     @Mod.EventBusSubscriber(value= Dist.CLIENT, modid=MODID, bus=Mod.EventBusSubscriber.Bus.FORGE)
@@ -33,9 +29,12 @@ public class StickyHands
         @SubscribeEvent
         public static void tickEvent(TickEvent.ClientTickEvent event)
         {
-            if (lastHand != null && !Minecraft.getInstance().options.keyUse.isDown())
+            if(event.phase == TickEvent.Phase.START)
             {
-                lastHand = null;
+                if (lastHand != null && !Minecraft.getInstance().options.keyUse.isDown())
+                {
+                    lastHand = null;
+                }
             }
         }
 
@@ -53,7 +52,7 @@ public class StickyHands
         @SubscribeEvent
         public static void useStart(LivingEntityUseItemEvent.Start event)
         {
-            if (!event.getEntity().level.isClientSide)
+            if (!event.getEntity().level().isClientSide)
                 return;
 
             if (event.getEntity() instanceof Player)
